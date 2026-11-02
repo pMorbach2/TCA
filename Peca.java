@@ -1,11 +1,13 @@
 public class Peca {
 
+    // Parametros/atributos dos objetos criados
     String cor;
     String tipo;
     int linha;
     int coluna;
     boolean jaMoveu = false;
 
+    // Construtor dos objetos
     public Peca(String cor, String tipo, int linha,int coluna){
         this.cor = cor;
         this.tipo = tipo;
