@@ -15,6 +15,7 @@ public class Peca {
         this.coluna = coluna;
     }
 
+    //Pega o caracter do tipo da peça
     public char getSimbolo(){
         char simbolo;
 

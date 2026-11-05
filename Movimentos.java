@@ -282,10 +282,6 @@ public class Movimentos {
     }
 
     public static boolean verificarXequeMate(String cor){
-        // Confere um possivel afogamento
-        if (verificarXeque(cor) == false) {
-            return false;
-        }
         // Percorre o tabuleiro procurando peças da cor desejada
         for (int i = 0; i < Tabuleiro.tabuleiro.length; i++) {
             for (int j = 0; j < Tabuleiro.tabuleiro[i].length; j++) {
@@ -294,7 +290,7 @@ public class Movimentos {
                     // Testa todas as casas como possíveis destinos para a peça encontrada
                     for (int x = 0; x < 8; x++) {
                         for (int y = 0; y < 8; y++) {
-                            if (testarSaidaDoMate(Tabuleiro.tabuleiro[i][j], x, y)) {
+                            if (testarSaidaDoMate(Tabuleiro.tabuleiro[i][j], x, y) == true) {
                                 return false;
                             }
                         }

@@ -55,7 +55,7 @@ public class Tabuleiro {
     }
 
     public static Peca buscarPeca(char coluna, int linha) {
-        // As linhas a seguir são feitas para que a notação do xadrez seja convertida em llinhas da matriz
+        // As linhas a seguir são feitas para que a notação do xadrez seja convertida em linhas da matriz
         coluna = Character.toLowerCase(coluna);
         coluna -= 'a';
         linha = 8 - linha;

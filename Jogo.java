@@ -26,6 +26,7 @@ public class Jogo {
         Tabuleiro.inicializarTabuleiro();
         Tabuleiro.imprimirTabuleiro();
         String turnoAtual = "Branco";
+
         while (true) {
             System.out.println("Turno: " + turnoAtual);
             // Lendo a posição de origem
@@ -79,6 +80,8 @@ public class Jogo {
                     } else {
                         System.out.println("XEQUE!");
                     }
+                } else if (Movimentos.verificarXequeMate(corAdversario) == true) {
+                    System.out.println("AFOGAMENTO!!! JOGO EMPATADO");
                 }
             }
         }
