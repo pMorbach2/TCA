@@ -65,7 +65,29 @@ public class Jogo {
             } else {
                 corAdversario = "Branco";
             }
+
             if (Tabuleiro.moverPeca(colunai, colunaf, linhai, linhaf) == true) {
+                if (Movimentos.verificarPromoção(colunaf, linhaf) == true) {
+                    int numDigitado = 0;
+                    System.out.println("Seu peão será promovido escolha entre as opções\n1 para - DAMA\n2 para - TORRE\n3 para BISPO\n4 para CAVALO");
+                    switch (numDigitado) {
+                        case 1:
+                            peca.tipo = "Dama";
+                            break;
+                        case 2:
+                            peca.tipo = "Torre";
+                            break;
+                        case 3:
+                            peca.tipo = "Bispo";
+                            break;
+                        case 4:
+                            peca.tipo = "Cavalo";
+                            break;
+                        default:
+                            System.out.println("Essa peça não está dentro das opcões");
+                            continue;
+                    }
+                }
                 Tabuleiro.imprimirTabuleiro();
                 if (turnoAtual.equals("Branco")) {
                     turnoAtual = "Preto";

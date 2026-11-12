@@ -379,4 +379,18 @@ public class Movimentos {
                 return false;
         }
     }
+
+    public static boolean verificarPromoção(char coluna, int linha){
+        Peca peca = Tabuleiro.buscarPeca(coluna, linha);
+        if (peca.tipo.equals("Peao") == false) {
+            return false;
+        }
+        if (peca.cor.equals("Branco") && peca.linha == 7) {
+            return true;
+        } else if(peca.cor.equals("Preto") && peca.linha == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
