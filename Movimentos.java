@@ -385,9 +385,9 @@ public class Movimentos {
         if (peca.tipo.equals("Peao") == false) {
             return false;
         }
-        if (peca.cor.equals("Branco") && peca.linha == 7) {
+        if (peca.cor.equals("Branco") && peca.linha == 0) {
             return true;
-        } else if(peca.cor.equals("Preto") && peca.linha == 0){
+        } else if(peca.cor.equals("Preto") && peca.linha == 7){
             return true;
         } else {
             return false;

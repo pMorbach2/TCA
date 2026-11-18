@@ -1,6 +1,6 @@
 import java.util.Scanner;
 public class Jogo {
-    static Scanner ler = new Scanner(System.in);
+    static Scanner LER = new Scanner(System.in);
 
     // Validar posicação digitada
     public static boolean validarPosicao(String posicao) {
@@ -31,7 +31,7 @@ public class Jogo {
             System.out.println("Turno: " + turnoAtual);
             // Lendo a posição de origem
             System.out.print("Posição de origem: ");
-            String posicaoI = ler.nextLine();
+            String posicaoI = LER.nextLine();
             if (validarPosicao(posicaoI) == false) {
                 System.out.println("Posição inválida!");
                 continue;
@@ -41,7 +41,7 @@ public class Jogo {
 
             // Lendo a posição de destino
             System.out.print("Posição de destino: ");
-            String posicaoF = ler.nextLine();
+            String posicaoF = LER.nextLine();
             if (validarPosicao(posicaoF) == false) {
                 System.out.println("Posição inválida!");
                 continue;
@@ -68,8 +68,8 @@ public class Jogo {
 
             if (Tabuleiro.moverPeca(colunai, colunaf, linhai, linhaf) == true) {
                 if (Movimentos.verificarPromoção(colunaf, linhaf) == true) {
-                    int numDigitado = 0;
                     System.out.println("Seu peão será promovido escolha entre as opções\n1 para - DAMA\n2 para - TORRE\n3 para BISPO\n4 para CAVALO");
+                    int numDigitado = LER.nextInt();
                     switch (numDigitado) {
                         case 1:
                             peca.tipo = "Dama";

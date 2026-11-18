@@ -38,14 +38,20 @@ public class Tabuleiro {
         }
     }
 
-    public static void imprimirTabuleiro() {
+     public static void imprimirTabuleiro() {
         System.out.println("  A B C D E F G H");
+
 
         for (int i = 0; i < tabuleiro.length; i++) {
             System.out.print((8 - i) + " ");
             for (int j = 0; j < tabuleiro[i].length; j++) {
                 if (tabuleiro[i][j] == null) {
-                    System.out.print(". ");
+                    if (i % 2 == 0 && j % 2 == 1){
+                        System.out.print('⬜');
+                    }
+                    else{
+                        System.out.print('⬛');
+                    }
                 } else {
                     System.out.print(tabuleiro[i][j].getSimbolo() + " ");
                 }

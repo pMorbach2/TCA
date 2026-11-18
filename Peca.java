@@ -8,43 +8,42 @@ public class Peca {
     boolean jaMoveu = false;
 
     // Construtor dos objetos
-    public Peca(String cor, String tipo, int linha,int coluna){
+    public Peca(String cor, String tipo, int linha, int coluna) {
         this.cor = cor;
         this.tipo = tipo;
         this.linha = linha;
         this.coluna = coluna;
     }
 
-    //Pega o caracter do tipo da peça
-    public char getSimbolo(){
-        char simbolo;
+    // Pega o caracter do tipo da peça
+    public String getSimbolo() {
+        String simbolo = "";
 
         switch (tipo) {
-            case "Peao":
-                simbolo = 'P';
-                break;
-            case "Torre":
-                simbolo = 'T';
-                break;
-            case "Cavalo":
-                simbolo = 'C';
-                break;
-            case "Bispo":
-                simbolo = 'B';
-                break;
             case "Rei":
-                simbolo = 'R';
+                simbolo = "♚";
                 break;
             case "Dama":
-                simbolo = 'D';
+                simbolo = "♛";
                 break;
-            default:
-                simbolo = '?';
+            case "Torre":
+                simbolo = "♜";
                 break;
-            }
-            if (cor.equals("Preto")){
-                simbolo = Character.toLowerCase(simbolo);
-            }
-            return simbolo;
+            case "Bispo":
+                simbolo = "♝";
+                break;
+            case "Cavalo":
+                simbolo = "♞";
+                break;
+            case "Peao":
+                simbolo = "♟";
+                break;
+        }
+
+        if (cor.equals("Branco")) {
+            return "\033[97m" + simbolo + "\033[0m";
+        } else {
+            return "\033[30m" + simbolo + "\033[0m";
+        }
     }
 }
