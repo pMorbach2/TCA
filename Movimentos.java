@@ -191,7 +191,7 @@ public class Movimentos {
         if (Math.abs(auxlinhai - auxlinhaf) > 1 || Math.abs(auxcolunai - auxcolunaf) > 1 || (Math.abs(auxlinhai - auxlinhaf) == 0) && Math.abs(auxcolunai - auxcolunaf) == 0){
             return false;
         }
-        if (verificarDama(colunai, colunaf, linhai, linhaf)) {
+        if (verificarDama(colunai, colunaf, linhai, linhaf) == true) {
             return  true;
         } else {
             return false;
@@ -392,5 +392,13 @@ public class Movimentos {
         } else {
             return false;
         }
+    }
+
+    public static boolean verificarRoque(Peca rei, Peca torre){
+        if (rei.tipo == "Rei" && !rei.cor.equals(torre.cor) || torre.tipo == "Torre" || verificarXeque(rei.cor) == true || rei.jaMoveu == true || torre.jaMoveu == true) {
+            return false;
+        }
+
+        return false;
     }
 }
