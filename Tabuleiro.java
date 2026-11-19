@@ -38,30 +38,40 @@ public class Tabuleiro {
         }
     }
 
-     public static void imprimirTabuleiro() {
-        System.out.println("  A B C D E F G H");
-
+    public static void imprimirTabuleiro() {
+        System.out.println("   A  B  C  D  E  F  G  H");
+        String fundoPreto = "\u001B[40m";
+        String fundoBranco = "\u001B[47m";
+        String reset = "\u001B[0m";
 
         for (int i = 0; i < tabuleiro.length; i++) {
             System.out.print((8 - i) + " ");
             for (int j = 0; j < tabuleiro[i].length; j++) {
-                if (tabuleiro[i][j] == null) {
-                    if (i % 2 == 0 && j % 2 == 1){
-                        System.out.print('⬜');
-                    }
-                    else{
-                        System.out.print('⬛');
-                    }
+                String fundo;
+
+                if ((i + j) % 2 == 0) {
+                    fundo = fundoPreto;
                 } else {
-                    System.out.print(tabuleiro[i][j].getSimbolo() + " ");
+                    fundo = fundoBranco;
                 }
+
+                System.out.print(fundo);
+
+                if (tabuleiro[i][j] == null) {
+                    System.out.print("   ");
+                } else {
+                    System.out.print(" " + tabuleiro[i][j].getSimbolo() + " ");
+                }
+
+                System.out.print(reset);
             }
             System.out.println();
         }
     }
 
     public static Peca buscarPeca(char coluna, int linha) {
-        // As linhas a seguir são feitas para que a notação do xadrez seja convertida em linhas da matriz
+        // As linhas a seguir são feitas para que a notação do xadrez seja convertida em
+        // linhas da matriz
         coluna = Character.toLowerCase(coluna);
         coluna -= 'a';
         linha = 8 - linha;
@@ -92,23 +102,23 @@ public class Tabuleiro {
                 }
                 break;
             case "Cavalo":
-                    if (Movimentos.verificarCavalo(colunai, colunaf, linhai, linhaf) == false) {
-                        System.out.println("Movimento inválido");
-                        return false;
-                    }
-                    break;
+                if (Movimentos.verificarCavalo(colunai, colunaf, linhai, linhaf) == false) {
+                    System.out.println("Movimento inválido");
+                    return false;
+                }
+                break;
             case "Bispo":
                 if (Movimentos.verificarBispo(colunai, colunaf, linhai, linhaf) == false) {
                     System.out.println("Movimento inválido");
                     return false;
-                    }
-                    break;
+                }
+                break;
             case "Dama":
                 if (Movimentos.verificarDama(colunai, colunaf, linhai, linhaf) == false) {
                     System.out.println("Movimento inválido");
                     return false;
-                    }
-                    break;
+                }
+                break;
             case "Rei":
                 if (Movimentos.verificarRei(colunai, colunaf, linhai, linhaf) == false) {
                     System.out.println("Movimento inválido");
@@ -138,7 +148,7 @@ public class Tabuleiro {
         peca.coluna = colunaf;
         peca.jaMoveu = true;
         // Se der xeque o movimento é desfeito
-        if (Movimentos.verificarXeque(peca.cor) == true){
+        if (Movimentos.verificarXeque(peca.cor) == true) {
             tabuleiro[linhai][colunai] = peca;
             tabuleiro[linhaf][colunaf] = destino;
             peca.linha = linhaAntiga;
@@ -150,3 +160,9 @@ public class Tabuleiro {
         return true;
     }
 }
+
+// if ((i + j) % 2 == 0) {
+// System.out.print("⬛");
+// } else {
+// System.out.print("⬜");
+// }
