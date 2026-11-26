@@ -41,9 +41,9 @@ public class Peca {
         }
 
         if (cor.equals("Branco")) {
-            return "\u001B[97m" + simbolo + "\u001B[97m"; 
+            return "\u001B[97m" + simbolo + "\u001B[39m";
         } else {
-            return "\033[30m" + simbolo + "\033[0m";
+            return "\u001B[30m" + simbolo + "\u001B[39m";
         }
     }
-}  
+}
