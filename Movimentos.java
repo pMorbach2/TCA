@@ -195,19 +195,37 @@ public class Movimentos {
 
     public static boolean verificarRei(char colunai, char colunaf, int linhai, int linhaf) {
         Peca rei = Tabuleiro.buscarPeca(colunai, linhai);
+
         if (rei == null) {
             return false;
         }
+
         char auxcolunaf = Character.toLowerCase(colunaf);
         char auxcolunai = Character.toLowerCase(colunai);
         auxcolunaf -= 'a';
         auxcolunai -= 'a';
+
         int auxlinhaf = 8 - linhaf;
         int auxlinhai = 8 - linhai;
+
+        // Verifica se o rei está tentando fazer roque
+        if (auxlinhai == auxlinhaf && Math.abs(auxcolunai - auxcolunaf) == 2) {
+            Peca torre;
+
+            if (auxcolunaf > auxcolunai) {
+                torre = Tabuleiro.tabuleiro[auxlinhai][7];
+            } else {
+                torre = Tabuleiro.tabuleiro[auxlinhai][0];
+            }
+
+            return verificarRoque(rei, torre);
+        }
+
         if (Math.abs(auxlinhai - auxlinhaf) > 1 || Math.abs(auxcolunai - auxcolunaf) > 1
-                || (Math.abs(auxlinhai - auxlinhaf) == 0) && Math.abs(auxcolunai - auxcolunaf) == 0) {
+                || (Math.abs(auxlinhai - auxlinhaf) == 0 && Math.abs(auxcolunai - auxcolunaf) == 0)) {
             return false;
         }
+
         if (verificarDama(colunai, colunaf, linhai, linhaf) == true) {
             return true;
         } else {
@@ -414,12 +432,67 @@ public class Movimentos {
         }
     }
 
-    public static boolean verificarRoque(Peca rei, Peca torre) {
-        if (rei.tipo == "Rei" && !rei.cor.equals(torre.cor) || torre.tipo == "Torre" || verificarXeque(rei.cor) == true
-                || rei.jaMoveu == true || torre.jaMoveu == true) {
-            return false;
+    public static boolean verificarAtaqueInimigo(String cor, int linha, int coluna) {
+        for (int i = 0; i < Tabuleiro.tabuleiro.length; i++) {
+            for (int j = 0; j < Tabuleiro.tabuleiro[i].length; j++) {
+
+                Peca peca = Tabuleiro.tabuleiro[i][j];
+
+                if (peca != null && peca.cor.equals(cor) == false) {
+
+                    if (verificarAtaque(peca, linha, coluna)) {
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;
+    }
+
+    public static boolean verificarRoque(Peca rei, Peca torre) {
+        if (rei == null || torre == null) {
+            return false;
+        }
+
+        if (rei.tipo.equals("Rei") == false || torre.tipo.equals("Torre") == false || rei.cor.equals(torre.cor) == false
+                || rei.jaMoveu == true || torre.jaMoveu == true || verificarXeque(rei.cor) == true) {
+            return false;
+        }
+
+        // Verifica se as peças estão na mesma linha
+        if (rei.linha != torre.linha) {
+            return false;
+        }
+
+        // Verifica se as casas entre o rei e a torre estão vazias
+        int inicio = rei.coluna;
+        int fim = torre.coluna;
+
+        if (inicio > fim) {
+            inicio = torre.coluna;
+            fim = rei.coluna;
+        }
+
+        for (int j = inicio + 1; j < fim; j++) {
+            if (Tabuleiro.tabuleiro[rei.linha][j] != null) {
+                return false;
+            }
+        }
+
+        // Verifica se as casas que o rei percorre estão sendo atacadas
+        int direcao = 1;
+
+        if (torre.coluna < rei.coluna) {
+            direcao = -1;
+        }
+
+        for (int j = rei.coluna + direcao; j != rei.coluna + (direcao * 3); j += direcao) {
+            if (verificarAtaqueInimigo(rei.cor, rei.linha, j) == true) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

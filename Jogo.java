@@ -70,7 +70,6 @@ public class Jogo {
             if (Tabuleiro.moverPeca(colunai, colunaf, linhai, linhaf) == true) {
                 if (Movimentos.verificarPromoção(colunaf, linhaf) == true) {
                     boolean promovido = false;
-
                     while (promovido == false) {
                         System.out.println(
                                 "Seu peão será promovido, escolha entre as opções\n1 para - DAMA\n2 para - TORRE\n3 para - BISPO\n4 para - CAVALO");

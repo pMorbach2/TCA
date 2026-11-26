@@ -82,11 +82,14 @@ public class Tabuleiro {
     public static boolean moverPeca(char colunai, char colunaf, int linhai, int linhaf) {
         colunaf = Character.toLowerCase(colunaf);
         colunai = Character.toLowerCase(colunai);
+
         Peca peca = buscarPeca(colunai, linhai);
+
         if (peca == null) {
             System.out.println("Não existe peça nesta posicão");
             return false;
         }
+
         // Verificação de movimentação das peças
         switch (peca.tipo) {
             case "Peao":
@@ -95,68 +98,146 @@ public class Tabuleiro {
                     return false;
                 }
                 break;
+
             case "Torre":
                 if (Movimentos.verificarTorre(colunai, colunaf, linhai, linhaf) == false) {
                     System.out.println("Movimento inválido");
                     return false;
                 }
                 break;
+
             case "Cavalo":
                 if (Movimentos.verificarCavalo(colunai, colunaf, linhai, linhaf) == false) {
                     System.out.println("Movimento inválido");
                     return false;
                 }
                 break;
+
             case "Bispo":
                 if (Movimentos.verificarBispo(colunai, colunaf, linhai, linhaf) == false) {
                     System.out.println("Movimento inválido");
                     return false;
                 }
                 break;
+
             case "Dama":
                 if (Movimentos.verificarDama(colunai, colunaf, linhai, linhaf) == false) {
                     System.out.println("Movimento inválido");
                     return false;
                 }
                 break;
+
             case "Rei":
                 if (Movimentos.verificarRei(colunai, colunaf, linhai, linhaf) == false) {
                     System.out.println("Movimento inválido");
                     return false;
                 }
                 break;
+
             default:
                 System.out.println("Tipo de peça desconhecido");
                 return false;
         }
+
         Peca destino = buscarPeca(colunaf, linhaf);
+
         if (destino != null && peca.cor.equals(destino.cor)) {
             System.out.println("Movimento inválido");
             return false;
         }
+
         colunaf -= 'a';
         colunai -= 'a';
         linhaf = 8 - linhaf;
         linhai = 8 - linhai;
-        // Simulação do movimento pra verificar um possível xeque
+
+        // Verifica se o movimento é um roque
+        if (peca.tipo.equals("Rei") && Math.abs(colunaf - colunai) == 2) {
+
+            int colunaTorre;
+            int colunaNovaTorre;
+
+            if (colunaf > colunai) {
+                colunaTorre = 7;
+                colunaNovaTorre = 5;
+            } else {
+                colunaTorre = 0;
+                colunaNovaTorre = 3;
+            }
+
+            Peca torre = tabuleiro[linhai][colunaTorre];
+
+            // Guarda as posições e informações antigas
+            int linhaAntiga = peca.linha;
+            int colunaAntiga = peca.coluna;
+            boolean jaMoveuAntigo = peca.jaMoveu;
+            boolean jaMoveuTorreAntigo = torre.jaMoveu;
+
+            // Simula o movimento do rei e da torre
+            tabuleiro[linhai][colunai] = null;
+            tabuleiro[linhai][colunaTorre] = null;
+
+            tabuleiro[linhai][colunaf] = peca;
+            tabuleiro[linhai][colunaNovaTorre] = torre;
+
+            peca.linha = linhai;
+            peca.coluna = colunaf;
+            peca.jaMoveu = true;
+
+            torre.linha = linhai;
+            torre.coluna = colunaNovaTorre;
+            torre.jaMoveu = true;
+
+            // Verifica se o rei ficou em xeque
+            if (Movimentos.verificarXeque(peca.cor) == true) {
+
+                // Desfaz o movimento
+                tabuleiro[linhai][colunaf] = null;
+                tabuleiro[linhai][colunaNovaTorre] = null;
+
+                tabuleiro[linhai][colunai] = peca;
+                tabuleiro[linhai][colunaTorre] = torre;
+
+                peca.linha = linhaAntiga;
+                peca.coluna = colunaAntiga;
+                peca.jaMoveu = jaMoveuAntigo;
+
+                torre.linha = linhaAntiga;
+                torre.coluna = colunaTorre;
+                torre.jaMoveu = jaMoveuTorreAntigo;
+
+                System.out.println("Seu Rei ficará em xeque");
+                return false;
+            }
+
+            return true;
+        }
+
+        // Simulação do movimento normal pra verificar um possível xeque
         int linhaAntiga = peca.linha;
         int colunaAntiga = peca.coluna;
         boolean jaMoveuAntigo = peca.jaMoveu;
+
         tabuleiro[linhai][colunai] = null;
         tabuleiro[linhaf][colunaf] = peca;
+
         peca.linha = linhaf;
         peca.coluna = colunaf;
         peca.jaMoveu = true;
+
         // Se der xeque o movimento é desfeito
         if (Movimentos.verificarXeque(peca.cor) == true) {
             tabuleiro[linhai][colunai] = peca;
             tabuleiro[linhaf][colunaf] = destino;
+
             peca.linha = linhaAntiga;
             peca.coluna = colunaAntiga;
             peca.jaMoveu = jaMoveuAntigo;
+
             System.out.println("Seu Rei ficará em xeque");
             return false;
         }
+
         return true;
     }
 }
