@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class Jogo {
     static Scanner LER = new Scanner(System.in);
 
@@ -68,24 +69,33 @@ public class Jogo {
 
             if (Tabuleiro.moverPeca(colunai, colunaf, linhai, linhaf) == true) {
                 if (Movimentos.verificarPromoção(colunaf, linhaf) == true) {
-                    System.out.println("Seu peão será promovido escolha entre as opções\n1 para - DAMA\n2 para - TORRE\n3 para BISPO\n4 para CAVALO");
-                    int numDigitado = LER.nextInt();
-                    switch (numDigitado) {
-                        case 1:
-                            peca.tipo = "Dama";
-                            break;
-                        case 2:
-                            peca.tipo = "Torre";
-                            break;
-                        case 3:
-                            peca.tipo = "Bispo";
-                            break;
-                        case 4:
-                            peca.tipo = "Cavalo";
-                            break;
-                        default:
-                            System.out.println("Essa peça não está dentro das opcões");
-                            continue;
+                    boolean promovido = false;
+
+                    while (promovido == false) {
+                        System.out.println(
+                                "Seu peão será promovido, escolha entre as opções\n1 para - DAMA\n2 para - TORRE\n3 para - BISPO\n4 para - CAVALO");
+                        String entrada = LER.nextLine();
+
+                        switch (entrada) {
+                            case "1":
+                                peca.tipo = "Dama";
+                                promovido = true;
+                                break;
+                            case "2":
+                                peca.tipo = "Torre";
+                                promovido = true;
+                                break;
+                            case "3":
+                                peca.tipo = "Bispo";
+                                promovido = true;
+                                break;
+                            case "4":
+                                peca.tipo = "Cavalo";
+                                promovido = true;
+                                break;
+                            default:
+                                System.out.println("Essa opção não existe, tente de novo.");
+                        }
                     }
                 }
                 Tabuleiro.imprimirTabuleiro();
@@ -97,13 +107,14 @@ public class Jogo {
                 if (Movimentos.verificarXeque(corAdversario) == true) {
                     if (Movimentos.verificarXequeMate(corAdversario) == true) {
                         System.out.println("XEQUE-MATE!");
-                        System.out.println("Vitória das: " + turnoAtual);
+                        System.out.println("Vitória das: " + peca.cor);
                         break;
                     } else {
                         System.out.println("XEQUE!");
                     }
                 } else if (Movimentos.verificarXequeMate(corAdversario) == true) {
                     System.out.println("AFOGAMENTO!!! JOGO EMPATADO");
+                    break;
                 }
             }
         }
