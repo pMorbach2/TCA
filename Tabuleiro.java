@@ -40,8 +40,8 @@ public class Tabuleiro {
 
     public static void imprimirTabuleiro() {
         System.out.println("   A  B  C  D  E  F  G  H");
-        String fundoPreto = "\u001B[40m";
-        String fundoBranco = "\u001B[47m";
+        String fundoEscuro = "\u001B[48;5;94m";
+        String fundoClaro = "\u001B[48;5;180m";
         String reset = "\u001B[0m";
 
         for (int i = 0; i < tabuleiro.length; i++) {
@@ -49,10 +49,10 @@ public class Tabuleiro {
             for (int j = 0; j < tabuleiro[i].length; j++) {
                 String fundo;
 
-                if ((i + j) % 2 == 0) {
-                    fundo = fundoPreto;
+                if ((i + j) % 2 != 0) {
+                    fundo = fundoEscuro;
                 } else {
-                    fundo = fundoBranco;
+                    fundo = fundoClaro;
                 }
 
                 System.out.print(fundo);
@@ -160,9 +160,3 @@ public class Tabuleiro {
         return true;
     }
 }
-
-// if ((i + j) % 2 == 0) {
-// System.out.print("⬛");
-// } else {
-// System.out.print("⬜");
-// }
